@@ -1,2 +1,2 @@
-# fundraising-calculator
-Fundraising plan calculator 20260731
+# fundraising-calculators
+Fundraising plan calculators
