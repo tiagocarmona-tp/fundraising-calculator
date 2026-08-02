@@ -13,60 +13,64 @@
   *{box-sizing:border-box;margin:0;padding:0}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    background:var(--paper);color:var(--ink);padding:32px 20px 56px;line-height:1.45;
+    background:var(--paper);color:var(--ink);padding:14px 14px 20px;line-height:1.4;
   }
   .wrap{max-width:900px;margin:0 auto}
-  .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:6px}
-  h1{font-size:26px;font-weight:700;letter-spacing:-.01em;margin-bottom:6px}
-  .sub{color:var(--ink-soft);font-size:14px;max-width:680px;margin-bottom:28px}
+  h1{font-size:21px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
 
-  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-bottom:20px}
-  .panel h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:14px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px}
+  .panel h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-bottom:10px}
 
-  .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:16px}
-  .field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px}
+  .inputs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 14px}
+  .field label{display:block;font-size:12px;color:var(--ink-soft);margin-bottom:4px}
   .field input,.field select{
-    width:100%;padding:9px 10px;font-size:16px;font-weight:600;color:var(--ink);
+    width:100%;padding:7px 9px;font-size:15px;font-weight:600;color:var(--ink);
     background:var(--edit);border:1px solid var(--edit-border);border-radius:6px;outline:none;
     font-variant-numeric:tabular-nums;
   }
   .field input:focus,.field select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-  .hint{font-size:11.5px;color:var(--ink-soft);margin-top:4px}
+  .hint{font-size:11px;color:var(--ink-soft);margin-top:3px}
 
-  .headline{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
-  .stat .k{font-size:12px;color:var(--ink-soft);margin-bottom:4px}
-  .stat .v{font-size:23px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .headline{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+  .stat .k{font-size:11.5px;color:var(--ink-soft);margin-bottom:3px}
+  .stat .v{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
   .stat.main{border-color:var(--accent);background:var(--accent-soft)}
   .stat.main .v{color:var(--accent)}
 
   .tscroll{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
-  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+  th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;white-space:nowrap}
   th:first-child,td:first-child{text-align:left}
-  th{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  th{font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
   td.cum{font-weight:700;color:var(--accent)}
   tr:last-child td{border-bottom:none}
 
-  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);margin-top:10px;justify-content:center}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-soft);margin-top:8px;justify-content:center}
   .legend span{display:inline-flex;align-items:center;gap:6px}
-  .sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
 
-  .note{font-size:12.5px;color:var(--ink-soft);border-left:3px solid var(--edit-border);padding:8px 12px;background:#fffbe9;border-radius:0 6px 6px 0;margin-top:16px}
-  @media (max-width:560px){ h1{font-size:22px} .stat .v{font-size:19px} }
+  .note{font-size:12px;color:var(--ink-soft);border-left:3px solid var(--edit-border);padding:7px 11px;background:#fffbe9;border-radius:0 6px 6px 0;margin-top:12px}
+  @media (max-width:560px){ h1{font-size:19px} .stat .v{font-size:17px} }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">Projeção de receita · out. 2026 – dez. 2029</div>
   <h1>Objetivo de receita — novos doadores regulares</h1>
-  <p class="sub">Projeção da receita gerada exclusivamente por novos doadores que aderem entre <strong>outubro de 2026</strong> e <strong>dezembro de 2029</strong>. Doadores anuais pagam à cabeça em cada adesão/renovação; doadores mensais (débito direto) acumulam 1/12 do valor por mês, com desconto de pagamentos perdidos. O churn aplica-se no aniversário. Edita as células amarelas — tudo recalcula automaticamente.</p>
 
   <div class="panel">
     <h2>Pressupostos</h2>
     <div class="inputs">
       <div class="field">
-        <label for="target">Doadores ativos no fim de 2029</label>
+        <label for="start">Início do período</label>
+        <select id="start"></select>
+      </div>
+      <div class="field">
+        <label for="end">Fim do período</label>
+        <select id="end"></select>
+      </div>
+      <div class="field">
+        <label for="target">Doadores ativos no fim</label>
         <input id="target" type="number" value="200" min="10" step="10">
       </div>
       <div class="field">
@@ -76,32 +80,32 @@
       <div class="field">
         <label for="churn">Churn anual (%)</label>
         <input id="churn" type="number" value="10" min="0" max="60" step="1">
-        <div class="hint">Aplicado na renovação/aniversário</div>
+        <div class="hint">Aplicado na renovação</div>
       </div>
       <div class="field">
         <label for="pctm">Adesões DD mensal (%)</label>
         <input id="pctm" type="number" value="60" min="0" max="100" step="5">
-        <div class="hint">Restantes pagam anualmente à cabeça</div>
+        <div class="hint">Restantes pagam anualmente</div>
       </div>
       <div class="field">
-        <label for="loss">Pagamentos perdidos (%)</label>
+        <label for="loss">Pagamentos perdidos(%)</label>
         <input id="loss" type="number" value="5" min="0" max="30" step="1">
-        <div class="hint">Cobranças DD não recuperadas</div>
+        <div class="hint">DD não recuperadOs</div>
       </div>
       <div class="field">
         <label for="ramp">Ritmo de angariação</label>
         <select id="ramp">
-          <option value="constant">Constante (39 meses)</option>
+          <option value="constant">Constante</option>
           <option value="linear">Crescente (rampa linear)</option>
         </select>
-        <div class="hint">Rampa: arranque lento, acelera até 2029</div>
+        <div class="hint">Rampa: arranque lento, acelera até ao fim</div>
       </div>
     </div>
   </div>
 
   <div class="headline">
-    <div class="stat main"><div class="k">Receita acumulada até dez. 2029</div><div class="v" id="hlCum">—</div></div>
-    <div class="stat"><div class="k">Receita do ano 2029</div><div class="v" id="hlRun">—</div></div>
+    <div class="stat main"><div class="k" id="kCum">Receita acumulada</div><div class="v" id="hlCum">—</div></div>
+    <div class="stat"><div class="k" id="kRun">Receita do último ano</div><div class="v" id="hlRun">—</div></div>
     <div class="stat"><div class="k">Run-rate em regime de cruzeiro</div><div class="v" id="hlSS">—</div></div>
     <div class="stat"><div class="k">Novos doadores a angariar (bruto)</div><div class="v" id="hlGross">—</div></div>
   </div>
@@ -126,23 +130,39 @@
       <span><i class="sw" style="background:#7fb3a5"></i>Anual à cabeça</span>
       <span><i class="sw" style="background:#c9a227"></i>Receita acumulada</span>
     </div>
-    <div class="note">As projeções são hipóteses de trabalho do consultor calibradas para a meta definida, não benchmarks de mercado nem promessas de resultado. Os pagamentos perdidos são tratados como perda de receita, não como churn (o doador mantém-se ativo). O modelo cobre apenas novos doadores angariados a partir de outubro de 2026 — a base atual de membros não está incluída.</div>
+    <div class="note">Doadores anuais pagam à cabeça na adesão e em cada renovação; doadores mensais (débito direto) acumulam 1/12 do valor por mês, com desconto de pagamentos perdidos — tratados como perda de receita, não como churn. O churn aplica-se no aniversário. As projeções são hipóteses de trabalho do consultor calibradas para a meta definida, não benchmarks nem promessas de resultado. O modelo cobre apenas novos doadores angariados dentro do período definido — a base atual de membros não está incluída.</div>
   </div>
 </div>
 
 <script>
-const MONTHS = 39, T = 38; // out 2026 (0) … dez 2029 (38)
-const YEARS = [
-  {label:"2026 (out–dez)", from:0,  to:2},
-  {label:"2027",           from:3,  to:14},
-  {label:"2028",           from:15, to:26},
-  {label:"2029",           from:27, to:38},
-];
+const MESES = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
 const fmtEUR = v => v.toLocaleString("pt-PT",{style:"currency",currency:"EUR",maximumFractionDigits:0});
 const fmtK   = v => (v/1000).toLocaleString("pt-PT",{maximumFractionDigits:0}) + " k€";
 const fmtN   = v => Math.round(v).toLocaleString("pt-PT");
 
+// Seletores de período: jan 2025 … dez 2032
+function fillPeriod(sel, defY, defM){
+  const el = document.getElementById(sel);
+  for (let y=2025; y<=2032; y++)
+    for (let m=0; m<12; m++){
+      const o = document.createElement("option");
+      o.value = `${y}-${m}`;
+      o.textContent = `${MESES[m]}. ${y}`;
+      el.appendChild(o);
+    }
+  el.value = `${defY}-${defM}`;
+}
+fillPeriod("start", 2026, 9);  // out 2026
+fillPeriod("end",   2029, 11); // dez 2029
+
+function parseYM(id){ const [y,m] = document.getElementById(id).value.split("-").map(Number); return {y,m}; }
+
 function simulate(){
+  let s = parseYM("start"), e = parseYM("end");
+  // Garantir fim >= início
+  if (e.y*12+e.m < s.y*12+s.m){ e = {...s}; document.getElementById("end").value = `${s.y}-${s.m}`; }
+  const MONTHS = (e.y*12+e.m) - (s.y*12+s.m) + 1, T = MONTHS-1;
+
   const target = Math.max(1, +document.getElementById("target").value || 0);
   const gift   = Math.max(0, +document.getElementById("gift").value   || 0);
   const churn  = Math.min(.99, Math.max(0,(+document.getElementById("churn").value||0)/100));
@@ -151,11 +171,13 @@ function simulate(){
   const ramp   = document.getElementById("ramp").value;
   const r = 1 - churn;
 
+  // Perfil de angariação e calibração para a meta de ativos no fim do período
   const w = []; for (let m=0;m<MONTHS;m++) w.push(ramp==="linear" ? m+1 : 1);
   let apu = 0; for (let m=0;m<MONTHS;m++) apu += w[m]*Math.pow(r, Math.floor((T-m)/12));
   const scale = target/apu;
   const a = w.map(x=>x*scale);
 
+  // Pagamentos mês a mês
   const payA = new Array(MONTHS).fill(0);
   const payM = new Array(MONTHS).fill(0);
   for (let m=0;m<MONTHS;m++){
@@ -164,6 +186,17 @@ function simulate(){
     for (let t=m; t<MONTHS; t++)      payM[t]      += aM*Math.pow(r,Math.floor((t-m)/12))*(gift/12)*(1-loss);
   }
 
+  // Anos civis dentro do período (com sufixo nos anos parciais)
+  const YEARS = [];
+  for (let y=s.y; y<=e.y; y++){
+    const from = Math.max(0, (y*12+0) - (s.y*12+s.m));
+    const to   = Math.min(T, (y*12+11) - (s.y*12+s.m));
+    const m0 = (s.y*12+s.m+from)%12, m1 = (s.y*12+s.m+to)%12;
+    const full = (m0===0 && m1===11);
+    YEARS.push({label: full ? `${y}` : `${y} (${MESES[m0]}–${MESES[m1]})`, from, to});
+  }
+
+  // Agregação anual
   const rows=[]; let cum=0, gross=0;
   for (const y of YEARS){
     let rA=0,rM=0,novos=0;
@@ -180,16 +213,19 @@ function simulate(){
     <td>${fmtEUR(o.rA)}</td><td>${fmtEUR(o.receita)}</td>
     <td class="cum">${fmtEUR(o.cum)}</td><td>${fmtN(o.ativos)}</td></tr>`).join("");
 
-  document.getElementById("hlCum").textContent   = fmtEUR(cum);
-  document.getElementById("hlRun").textContent   = fmtEUR(rows[3].receita);
-  document.getElementById("hlSS").textContent    = fmtEUR(steady) + "/ano";
+  document.getElementById("kCum").textContent   = `Receita acumulada até ${MESES[e.m]}. ${e.y}`;
+  document.getElementById("kRun").textContent   = `Receita de ${rows[rows.length-1].label}`;
+  document.getElementById("hlCum").textContent  = fmtEUR(cum);
+  document.getElementById("hlRun").textContent  = fmtEUR(rows[rows.length-1].receita);
+  document.getElementById("hlSS").textContent   = fmtEUR(steady) + "/ano";
   document.getElementById("hlGross").textContent = fmtN(gross);
 
   drawChart(rows);
 }
 
+// Gráfico SVG nativo: barras empilhadas (DD mensal + anual) e linha da acumulada
 function drawChart(rows){
-  const W=860, H=300, padL=64, padR=20, padT=16, padB=36;
+  const W=860, H=280, padL=64, padR=20, padT=16, padB=34;
   const iw=W-padL-padR, ih=H-padT-padB;
   const maxBar = Math.max(...rows.map(o=>o.receita));
   const maxCum = rows[rows.length-1].cum;
@@ -214,7 +250,7 @@ function drawChart(rows){
     s += `<rect x="${x0}" y="${yM}" width="${bw}" height="${Math.max(hM,0)}" fill="#0f6b5c" rx="3"/>`;
     s += `<rect x="${x0}" y="${yA}" width="${bw}" height="${Math.max(hA,0)}" fill="#7fb3a5" rx="3"/>`;
     s += `<text x="${cx}" y="${yA-6}" text-anchor="middle" font-size="11" font-weight="600" fill="#1c2b26">${fmtK(o.receita)}</text>`;
-    s += `<text x="${cx}" y="${H-padB+18}" text-anchor="middle" font-size="12" fill="#5a6b64">${o.label}</text>`;
+    s += `<text x="${cx}" y="${H-padB+18}" text-anchor="middle" font-size="11.5" fill="#5a6b64">${o.label}</text>`;
   });
 
   const pts = rows.map((o,i)=>`${x(i)},${y(o.cum)}`).join(" ");
@@ -228,7 +264,7 @@ function drawChart(rows){
   document.getElementById("chart").innerHTML = s;
 }
 
-["target","gift","churn","pctm","loss","ramp"].forEach(id=>
+["start","end","target","gift","churn","pctm","loss","ramp"].forEach(id=>
   document.getElementById(id).addEventListener("input", simulate));
 simulate();
 </script>
