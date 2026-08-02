@@ -88,9 +88,14 @@
         -->
       </div>
       <div class="field">
-        <label for="churn">Churn anual (%)</label>
-        <input id="churn" type="number" value="10" min="0" max="60" step="1">
-        <div class="hint">Aplicado na renovação</div>
+        <label for="churnm">Churn anual — mensal (%)</label>
+        <input id="churnm" type="number" value="10" min="0" max="60" step="1">
+        <div class="hint">Cancelamentos do DD</div>
+      </div>
+      <div class="field">
+        <label for="churna">Churn anual — anual (%)</label>
+        <input id="churna" type="number" value="10" min="0" max="60" step="1">
+        <div class="hint">Não-renovações</div>
       </div>
       <div class="field">
         <label for="pctm">Adesões DD mensal (%)</label>
@@ -141,7 +146,7 @@
       <span><i class="sw" style="background:#c9a227"></i>Receita acumulada</span>
     </div>
     <!-- Nota metodológica preservada internamente; comentada para poupar altura no embed.
-    <div class="note">Doadores anuais pagam à cabeça na adesão e em cada renovação; doadores mensais (débito direto) acumulam 1/12 do valor por mês, com desconto de pagamentos perdidos — tratados como perda de receita, não como churn. O churn aplica-se no aniversário. As projeções são hipóteses de trabalho do consultor calibradas para a meta definida, não benchmarks nem promessas de resultado. O modelo cobre apenas novos doadores angariados dentro do período definido — a base atual de membros não está incluída.</div>
+    <div class="note">Doadores anuais pagam à cabeça na adesão e em cada renovação; doadores mensais (débito direto) acumulam 1/12 do valor por mês, com desconto de pagamentos perdidos — tratados como perda de receita, não como churn. O churn aplica-se no aniversário, com taxas distintas por modalidade. As projeções são hipóteses de trabalho do consultor calibradas para a meta definida, não benchmarks nem promessas de resultado. O modelo cobre apenas novos doadores angariados dentro do período definido — a base atual de membros não está incluída.</div>
     -->
   </div>
 </div>
@@ -178,15 +183,22 @@ function simulate(){
   const target = Math.max(1, +document.getElementById("target").value || 0);
   const giftM  = Math.max(0, +document.getElementById("giftm").value  || 0);
   const giftA  = Math.max(0, +document.getElementById("gifta").value  || 0);
-  const churn  = Math.min(.99, Math.max(0,(+document.getElementById("churn").value||0)/100));
+  const churnM = Math.min(.99, Math.max(0,(+document.getElementById("churnm").value||0)/100));
+  const churnA = Math.min(.99, Math.max(0,(+document.getElementById("churna").value||0)/100));
   const pctM   = Math.min(1,   Math.max(0,(+document.getElementById("pctm").value ||0)/100));
   const loss   = Math.min(.5,  Math.max(0,(+document.getElementById("loss").value ||0)/100));
   const ramp   = document.getElementById("ramp").value;
-  const r = 1 - churn;
+  const retM = 1 - churnM;  // taxa de retenção — DD mensal
+  const retA = 1 - churnA;  // taxa de retenção — pagamento anual
 
   // Perfil de angariação e calibração para a meta de ativos no fim do período
+  // (sobrevivência combinada das duas modalidades, ponderada pelo mix de adesões)
   const w = []; for (let m=0;m<MONTHS;m++) w.push(ramp==="linear" ? m+1 : 1);
-  let apu = 0; for (let m=0;m<MONTHS;m++) apu += w[m]*Math.pow(r, Math.floor((T-m)/12));
+  let apu = 0;
+  for (let m=0;m<MONTHS;m++){
+    const f = Math.floor((T-m)/12);
+    apu += w[m]*((1-pctM)*Math.pow(retA,f) + pctM*Math.pow(retM,f));
+  }
   const scale = target/apu;
   const a = w.map(x=>x*scale);
 
@@ -195,8 +207,8 @@ function simulate(){
   const payM = new Array(MONTHS).fill(0);
   for (let m=0;m<MONTHS;m++){
     const aA = a[m]*(1-pctM), aM = a[m]*pctM;
-    for (let k=0; m+12*k<MONTHS; k++) payA[m+12*k] += aA*Math.pow(r,k)*giftA;
-    for (let t=m; t<MONTHS; t++)      payM[t]      += aM*Math.pow(r,Math.floor((t-m)/12))*(giftM/12)*(1-loss);
+    for (let k=0; m+12*k<MONTHS; k++) payA[m+12*k] += aA*Math.pow(retA,k)*giftA;
+    for (let t=m; t<MONTHS; t++)      payM[t]      += aM*Math.pow(retM,Math.floor((t-m)/12))*(giftM/12)*(1-loss);
   }
 
   // Anos civis dentro do período (com sufixo nos anos parciais)
@@ -214,12 +226,24 @@ function simulate(){
   for (const y of YEARS){
     let rA=0,rM=0,novos=0;
     for (let t=y.from;t<=y.to;t++){ rA+=payA[t]; rM+=payM[t]; novos+=a[t]; }
-    let ativos=0; for (let m=0;m<=y.to;m++) ativos += a[m]*Math.pow(r,Math.floor((y.to-m)/12));
+    let ativos=0;
+    for (let m=0;m<=y.to;m++){
+      const f = Math.floor((y.to-m)/12);
+      ativos += a[m]*((1-pctM)*Math.pow(retA,f) + pctM*Math.pow(retM,f));
+    }
     const receita=rA+rM; cum+=receita; gross+=novos;
     rows.push({label:y.label,novos,rA,rM,receita,cum,ativos});
   }
 
-  const steady = target*((1-pctM)*giftA + pctM*giftM*(1-loss));
+  // Run-rate em regime de cruzeiro: usa o mix real de ativos no fim do período
+  // (com churn distinto, a composição dos ativos desvia-se do mix de adesões)
+  let actA=0, actM=0;
+  for (let m=0;m<MONTHS;m++){
+    const f = Math.floor((T-m)/12);
+    actA += a[m]*(1-pctM)*Math.pow(retA,f);
+    actM += a[m]*pctM*Math.pow(retM,f);
+  }
+  const steady = actA*giftA + actM*giftM*(1-loss);
 
   document.querySelector("#tbl tbody").innerHTML = rows.map(o=>`
     <tr><td>${o.label}</td><td>${fmtN(o.novos)}</td><td>${fmtEUR(o.rM)}</td>
@@ -277,7 +301,7 @@ function drawChart(rows){
   document.getElementById("chart").innerHTML = s;
 }
 
-["start","end","target","giftm","gifta","churn","pctm","loss","ramp"].forEach(id=>
+["start","end","target","giftm","gifta","churnm","churna","pctm","loss","ramp"].forEach(id=>
   document.getElementById(id).addEventListener("input", simulate));
 simulate();
 </script>
