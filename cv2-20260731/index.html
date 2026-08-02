@@ -74,8 +74,14 @@
         <input id="target" type="number" value="300" min="10" step="10">
       </div>
       <div class="field">
-        <label for="gift">Donativo anual médio (€)</label>
-        <input id="gift" type="number" value="180" min="10" step="10">
+        <label for="giftm">€ médio anual — mensal</label>
+        <input id="giftm" type="number" value="200" min="10" step="10">
+        <div class="hint">Valor anual, pagamento mensal</div>
+      </div>
+      <div class="field">
+        <label for="gifta">€ médio anual — anual</label>
+        <input id="gifta" type="number" value="150" min="10" step="10">
+        <div class="hint">Valor anual, pagamento anual</div>
       </div>
       <div class="field">
         <label for="churn">Churn anual (%)</label>
@@ -88,17 +94,17 @@
         <div class="hint">Restantes pagam anualmente</div>
       </div>
       <div class="field">
-        <label for="loss">Pagamentos perdidos(%)</label>
+        <label for="loss">Pagamentos perdidos (%)</label>
         <input id="loss" type="number" value="5" min="0" max="30" step="1">
-        <div class="hint">DD não recuperados</div>
+        <div class="hint">DD mensais não recuperadas</div>
       </div>
       <div class="field">
         <label for="ramp">Ritmo de angariação</label>
         <select id="ramp">
-          <option value="linear">Crescente (rampa)</option>
+          <option value="linear">Crescente</option>
           <option value="constant">Constante</option>
         </select>
-        <div class="hint">Rampa: arranque lento, acelera até ao fim</div>
+        <div class="hint">Crescente: arranque lento</div>
       </div>
     </div>
   </div>
@@ -130,7 +136,9 @@
       <span><i class="sw" style="background:#7fb3a5"></i>Anual à cabeça</span>
       <span><i class="sw" style="background:#c9a227"></i>Receita acumulada</span>
     </div>
-    // <div class="note">Doadores anuais pagam à cabeça na adesão e em cada renovação; doadores mensais (débito direto) acumulam 1/12 do valor por mês, com desconto de pagamentos perdidos — tratados como perda de receita, não como churn. O churn aplica-se no aniversário. As projeções são hipóteses de trabalho do consultor calibradas para a meta definida, não benchmarks nem promessas de resultado. O modelo cobre apenas novos doadores angariados dentro do período definido — a base atual de membros não está incluída.</div>
+    <!-- Nota metodológica preservada internamente; comentada para poupar altura no embed.
+    <div class="note">Doadores anuais pagam à cabeça na adesão e em cada renovação; doadores mensais (débito direto) acumulam 1/12 do valor por mês, com desconto de pagamentos perdidos — tratados como perda de receita, não como churn. O churn aplica-se no aniversário. As projeções são hipóteses de trabalho do consultor calibradas para a meta definida, não benchmarks nem promessas de resultado. O modelo cobre apenas novos doadores angariados dentro do período definido — a base atual de membros não está incluída.</div>
+    -->
   </div>
 </div>
 
@@ -164,7 +172,8 @@ function simulate(){
   const MONTHS = (e.y*12+e.m) - (s.y*12+s.m) + 1, T = MONTHS-1;
 
   const target = Math.max(1, +document.getElementById("target").value || 0);
-  const gift   = Math.max(0, +document.getElementById("gift").value   || 0);
+  const giftM  = Math.max(0, +document.getElementById("giftm").value  || 0);
+  const giftA  = Math.max(0, +document.getElementById("gifta").value  || 0);
   const churn  = Math.min(.99, Math.max(0,(+document.getElementById("churn").value||0)/100));
   const pctM   = Math.min(1,   Math.max(0,(+document.getElementById("pctm").value ||0)/100));
   const loss   = Math.min(.5,  Math.max(0,(+document.getElementById("loss").value ||0)/100));
@@ -182,8 +191,8 @@ function simulate(){
   const payM = new Array(MONTHS).fill(0);
   for (let m=0;m<MONTHS;m++){
     const aA = a[m]*(1-pctM), aM = a[m]*pctM;
-    for (let k=0; m+12*k<MONTHS; k++) payA[m+12*k] += aA*Math.pow(r,k)*gift;
-    for (let t=m; t<MONTHS; t++)      payM[t]      += aM*Math.pow(r,Math.floor((t-m)/12))*(gift/12)*(1-loss);
+    for (let k=0; m+12*k<MONTHS; k++) payA[m+12*k] += aA*Math.pow(r,k)*giftA;
+    for (let t=m; t<MONTHS; t++)      payM[t]      += aM*Math.pow(r,Math.floor((t-m)/12))*(giftM/12)*(1-loss);
   }
 
   // Anos civis dentro do período (com sufixo nos anos parciais)
@@ -206,7 +215,7 @@ function simulate(){
     rows.push({label:y.label,novos,rA,rM,receita,cum,ativos});
   }
 
-  const steady = target*gift*((1-pctM) + pctM*(1-loss));
+  const steady = target*((1-pctM)*giftA + pctM*giftM*(1-loss));
 
   document.querySelector("#tbl tbody").innerHTML = rows.map(o=>`
     <tr><td>${o.label}</td><td>${fmtN(o.novos)}</td><td>${fmtEUR(o.rM)}</td>
@@ -264,7 +273,7 @@ function drawChart(rows){
   document.getElementById("chart").innerHTML = s;
 }
 
-["start","end","target","gift","churn","pctm","loss","ramp"].forEach(id=>
+["start","end","target","giftm","gifta","churn","pctm","loss","ramp"].forEach(id=>
   document.getElementById(id).addEventListener("input", simulate));
 simulate();
 </script>
